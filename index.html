@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maze Solver – Beam Search vs BFS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1><span class="logo-dot"></span>Maze Solver</h1>
+        <div class="subtitle">
+          Compare <strong>Beam Search</strong> and <strong>BFS</strong> on the same maze.
+          Watch the beam expansion tree and heuristic values step-by-step.
+        </div>
+      </div>
+      <div class="tag">Beam Search vs BFS</div>
+    </header>
+
+    <div class="content">
+      <!-- LEFT: Controls + legend + tree view -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Beam Search Controls</div>
+          <div class="card-meta">Step, auto-play and BFS comparison</div>
+        </div>
+
+        <div id="controls">
+          <div class="field">
+            <span>Beam width</span>
+            <input type="number" id="beamWidth" value="3" min="1">
+          </div>
+
+          <button id="resetBtn">
+            <span>🔁</span> Reset Beam
+          </button>
+          <button id="stepBtn" class="secondary">
+            <span>➡</span> Next Step
+          </button>
+          <button id="autoBtn">
+            <span>⏵</span> Auto-play
+          </button>
+          <button id="bfsBtn" class="secondary">
+            <span>📘</span> Run BFS (compare)
+          </button>
+          <button id="randomBtn" class="secondary">
+            <span>🎲</span> Random Maze
+          </button>
+        </div>
+
+        <div id="status"></div>
+
+        <div class="stats-row">
+          <div class="stat-pill">
+            Beam nodes: <strong id="beamExplored">0</strong>
+          </div>
+          <div class="stat-pill">
+            Beam path: <strong id="beamPathLen">–</strong>
+          </div>
+          <div class="stat-pill">
+            BFS nodes: <strong id="bfsExplored">–</strong>
+          </div>
+          <div class="stat-pill">
+            BFS path: <strong id="bfsPathLen">–</strong>
+          </div>
+        </div>
+
+        <div class="legend-card">
+          <div class="legend-title">Maze Legend</div>
+          <div class="legend-items">
+            <div class="legend-item">
+              <span class="legend-color legend-start"></span> Start
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-goal"></span> Goal
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-wall"></span> Wall
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-free"></span> Free cell
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-visited"></span> Visited
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-frontier"></span> Frontier
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-beam"></span> Beam path
+            </div>
+            <div class="legend-item">
+              <span class="legend-color legend-bfs"></span> BFS path
+            </div>
+          </div>
+        </div>
+
+        <div class="tree-card">
+          <div class="tree-title">Search “Graph” (Beam queue & children)</div>
+          <div id="treeView">
+            <div class="tree-empty">
+              Click <strong>Reset Beam</strong> then “Next Step” or “Auto-play” to see
+              nodes being inserted into the beam and pruned.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Maze + heuristic graph -->
+      <div class="maze-panel">
+        <div class="maze-header">
+          <div>
+            <div class="maze-title">Maze Grid (Beam + BFS)</div>
+            <div class="maze-subtitle">10 × 15 • colored walls • overlapping paths shown</div>
+          </div>
+        </div>
+
+        <div class="maze-wrapper">
+          <div id="maze"></div>
+        </div>
+
+        <div class="maze-graph-card">
+          <div class="maze-graph-title">Heuristic along path (h = Manhattan distance to goal)</div>
+          <canvas id="heuristicChart" width="440" height="150"></canvas>
+          <div class="maze-graph-legend">
+            <span><span class="maze-graph-dot greedy"></span>Greedy “possible” path (always smallest h)</span>
+            <span><span class="maze-graph-dot beam"></span>Beam search final path</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Beam Search uses f = g + h (Manhattan). BFS ignores h and explores by levels.</span>
+      <span>Use this visualizer in your report to show how nodes enter the beam / queue.</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
